@@ -127,7 +127,9 @@ const runTypeboxWithParse = () => run("Typebox with Parse", iterations, () => {
 })
 
 const runTypeboxWithoutParse = () => run("Typebox without Parse", iterations, () => {
-  return typeboxSchemaCompiled.Decode(value(1))
+  const val = value(1)
+  typeboxSchemaCompiled.Check(val)
+  return val
 })
 
 
