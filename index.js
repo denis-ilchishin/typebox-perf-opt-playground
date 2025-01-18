@@ -74,6 +74,7 @@ const typeboxSchema = Type.Object({
 
 const typeboxSchemaCompiled = TypeCompiler.Compile(typeboxSchema)
 
+// prop2 wont be converted by typebox without Value.Convert, so provide a default value to avoid errors
 const value = (prop2 = '1') => ({
   prop1: "string",
   prop2: 1,
@@ -94,7 +95,7 @@ const value = (prop2 = '1') => ({
 
 
 function run(name, iterations, cb) {
-  triggerGC?.()
+  triggerGC?.() // trigger garbage collection before running the benchmark
   const start = process.hrtime.bigint()
   for (let i = 0; i < iterations; i++) {
     cb()
