@@ -75,7 +75,7 @@ const typeboxSchema = Type.Object({
 const typeboxSchemaCompiled = TypeCompiler.Compile(typeboxSchema)
 
 // prop2 wont be converted by typebox without Value.Convert, so provide a default value to avoid errors
-const value = (prop2 = '1') => ({
+const getValue = (prop2 = '1') => ({
   prop1: "string",
   prop2: 1,
   prop3: true,
@@ -119,17 +119,16 @@ function print(...results) {
 
 
 const runZod = () => run("Zod", iterations, () => {
-  return zodSchema.parse(value())
+  zodSchema.parse(getValue())
 })
 
 const runTypeboxWithParse = () => run("Typebox with Parse", iterations, () => {
-  return typeboxSchemaCompiled.Decode(Value.Parse(["Clone", "Convert", "Clean", "Default"], typeboxSchema, value()))
+  // decode under the hood already runs check function
+  typeboxSchemaCompiled.Decode(Value.Parse(["Clone", "Convert", "Clean", "Default"], typeboxSchema, getValue()))
 })
 
 const runTypeboxWithoutParse = () => run("Typebox without Parse", iterations, () => {
-  const val = value(1)
-  typeboxSchemaCompiled.Check(val)
-  return val
+  typeboxSchemaCompiled.Check(getValue(1))
 })
 
 
