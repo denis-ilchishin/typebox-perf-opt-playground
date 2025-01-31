@@ -113,7 +113,7 @@ function print(...results) {
     name,
     iterations,
     time: ((Number(time) / 1e6).toFixed(3) + " ms").padStart(14),
-    performance: (i === 0 ? 1 : Number(results[0].time) / Number(time)).toFixed(2) + 'x'
+    performance: ((i === 0 ? 1 : Number(results[0].time) / Number(time)).toFixed(2) + 'x').padStart(10)
   })))
 }
 
